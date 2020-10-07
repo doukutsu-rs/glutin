@@ -206,12 +206,16 @@ impl Context {
         &self,
         rects: &[Rect],
     ) -> Result<(), ContextError> {
-        (**self).swap_buffers_with_damage(rects)
+        //(**self).swap_buffers_with_damage(rects)
+        Err(ContextError::OsError(
+            "buffer damage not suported".to_string(),
+        ))
     }
 
     #[inline]
     pub fn swap_buffers_with_damage_supported(&self) -> bool {
-        (**self).swap_buffers_with_damage_supported()
+        //(**self).swap_buffers_with_damage_supported()
+        false
     }
 
     #[inline]

@@ -673,22 +673,26 @@ impl Context {
         &self,
         rects: &[Rect],
     ) -> Result<(), ContextError> {
-        match self.context {
+        /*match self.context {
             X11Context::Glx(_) => Err(ContextError::OsError(
                 "buffer damage not suported".to_string(),
             )),
             X11Context::Egl(ref ctx) => ctx.swap_buffers_with_damage(rects),
-        }
+        }*/
+        Err(ContextError::OsError(
+            "buffer damage not suported".to_string(),
+        ))
     }
 
     #[inline]
     pub fn swap_buffers_with_damage_supported(&self) -> bool {
-        match self.context {
+        /*match self.context {
             X11Context::Glx(_) => false,
             X11Context::Egl(ref ctx) => {
                 ctx.swap_buffers_with_damage_supported()
             }
-        }
+        }*/
+        false
     }
 
     #[inline]
