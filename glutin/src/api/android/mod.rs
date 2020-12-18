@@ -1,12 +1,8 @@
 #![cfg(target_os = "android")]
 
-use crate::api::egl::{
-    Context as EglContext, NativeDisplay, SurfaceType as EglSurfaceType,
-};
+use crate::api::egl::{Context as EglContext, NativeDisplay, SurfaceType as EglSurfaceType};
 use crate::CreationError::{self, OsError};
-use crate::{
-    Api, ContextError, GlAttributes, PixelFormat, PixelFormatRequirements, Rect,
-};
+use crate::{Api, ContextError, GlAttributes, PixelFormat, PixelFormatRequirements, Rect};
 
 use crate::platform::android::EventLoopExtAndroid;
 use glutin_egl_sys as ffi;
@@ -63,16 +59,12 @@ impl Context {
         Ok((win, context))
     }
 
-    pub fn surface_destroyed(&self) {
-        unsafe {
-            self.0.egl_context.on_surface_destroyed();
-        }
+    pub unsafe fn surface_destroyed(&self) {
+        self.0.egl_context.on_surface_destroyed();
     }
 
-    pub fn surface_created(&self, nwin: ffi::egl::EGLNativeWindowType) {
-        unsafe {
-            self.0.egl_context.on_surface_created(nwin);
-        }
+    pub unsafe fn surface_created(&self, nwin: ffi::egl::EGLNativeWindowType) {
+        self.0.egl_context.on_surface_created(nwin);
     }
 
     #[inline]
@@ -91,10 +83,7 @@ impl Context {
             |c, _| Ok(c[0]),
         )?;
         let egl_context = context.finish_pbuffer(size)?;
-        let ctx = Arc::new(AndroidContext {
-            egl_context,
-            stopped: None,
-        });
+        let ctx = Arc::new(AndroidContext { egl_context, stopped: None });
         Ok(Context(ctx))
     }
 
@@ -151,13 +140,6 @@ impl Context {
         &self,
         rects: &[Rect],
     ) -> Result<(), ContextError> {
-        /*if let Some(ref stopped) = self.0.stopped {
-            let stopped = stopped.lock();
-            if *stopped {
-                return Err(ContextError::ContextLost);
-            }
-        }
-        self.0.egl_context.swap_buffers_with_damage(rects)*/
         Err(ContextError::OsError(
             "buffer damage not suported".to_string(),
         ))
