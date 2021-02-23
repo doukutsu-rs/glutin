@@ -605,7 +605,9 @@ impl Context {
             match unsafe { egl.GetError() } as u32 {
                 ffi::egl::CONTEXT_LOST => return Err(ContextError::ContextLost),
                 err => {
-                    panic!("swap_buffers: eglSwapBuffers failed (eglGetError returned 0x{:x})", err)
+                    //panic!("swap_buffers: eglSwapBuffers failed (eglGetError returned 0x{:x})", err)
+                    println!("eglSwapBuffers failed (eglGetError returned 0x{:x})", err);
+                    Ok(())
                 }
             }
         } else {
