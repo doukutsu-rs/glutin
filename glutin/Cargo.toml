@@ -21,10 +21,10 @@ default = ["x11", "wayland"]
 
 [dependencies]
 lazy_static = "1.3"
-winit = { version = "0.24.0", default-features = false }
+winit = { git = "https://github.com/alula/winit.git", rev = "6acf76ff192dd8270aaa119b9f35716c03685f9f", default-features = false }
 
 [target.'cfg(target_os = "android")'.dependencies]
-ndk-glue = "0.2"
+ndk-glue = "0.3"
 glutin_egl_sys = { version = "0.1.5", path = "../glutin_egl_sys" }
 parking_lot = "0.11"
 
